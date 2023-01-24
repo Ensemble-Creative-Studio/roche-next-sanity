@@ -96,7 +96,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
   }, []);
 
   return (
-    <LocomotiveScrollProvider options={options} containerRef={ref}>
+    <LocomotiveScrollProvider options={options} watch= {[]}  containerRef={ref}>
       {page && page.length > 0 ? (
         page.map((brand, i) => (
           <div className="fixed">
@@ -160,6 +160,8 @@ export default function BrandsPost({ page }: { page: PageProps }) {
             ) : (
               <p>You forgot to add images</p>
             )}
+              <section  className="intro  h-full filler" data-scroll-section></section>
+              <section className="intro filler h-full" data-scroll-section></section>
           </main>
           </div>
         ))

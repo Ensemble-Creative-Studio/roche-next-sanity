@@ -210,7 +210,7 @@ html.has-scroll-dragging {
       &.aos-animate {
         opacity: 1;
       }
-      transform: translateY(10px);
+      transform: translateY(15px);
     
       &.aos-animate {
         transform: translateY(0);
@@ -258,6 +258,13 @@ position: fixed;
 top: 0;
   }
 
+  .intro{
+    // opacity: 1 !important;
+  }
+  .filler{
+    width: 600px;
+  }
+
   @media screen and (min-width: 800px) {
     header{
       background-color: transparent;
@@ -281,5 +288,8 @@ top: 0;
     height: inherit;
 position: relative;
 
+   }
+   .filler{
+    display: none;
    }
   }
