@@ -6,11 +6,26 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "latest",
+    "@portabletext/react": "^2.0.0",
+    "@sanity/image-url": "^1.0.1",
+    "@sanity/vision": "^3.0.0",
+    "aos": "^2.3.4",
+    "framer-motion": "^8.5.2",
+    "gsap": "^3.11.4",
+    "locomotive-scroll": "^4.1.4",
+    "next": "^13.0.4",
+    "next-sanity": "^4.0.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-locomotive-scroll": "^0.2.2",
+    "sanity": "^3.0.0",
+    "sass": "^1.57.1",
+    "styled-components": "^5.2.0"
   },
   "devDependencies": {
+    "@sanity/eslint-config-studio": "^2.0.1",
+    "@types/aos": "^3.0.4",
+    "@types/locomotive-scroll": "^4.1.0",
     "@types/node": "18.11.3",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
