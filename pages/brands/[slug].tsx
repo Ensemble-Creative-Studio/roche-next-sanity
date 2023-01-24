@@ -3,7 +3,7 @@ import { client } from "../../lib/sanity.client";
 import Image from "next/image";
 import urlFor from "../../lib/urlFor";
 import { Slug } from "../../typings";
-import React, { useEffect } from "react";
+import React, { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useRef } from "react";
