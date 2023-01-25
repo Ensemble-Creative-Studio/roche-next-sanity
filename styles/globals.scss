@@ -3,12 +3,24 @@
 @tailwind utilities;
 
 html.has-scroll-smooth {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+html.has-scroll-smooth {
   overflow: hidden;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;  
+}
+[data-load-container] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
 }
 html {
   -moz-osx-font-smoothing: grayscale;
@@ -291,7 +303,7 @@ top: 0;
   
       margin-left: 0%;
     }
-   .fixed, .tofix{
+   .fixedPhoto, .tofix{
   
     height: inherit;
 position: relative;

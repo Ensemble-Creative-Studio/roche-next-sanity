@@ -164,13 +164,13 @@ export default function Page({ page }: { page: PageProps }) {
 
       </div>
   
-      <div className="flex h-screen">
+      <div className="flex nl:h-screen h-auto">
         <Image
             data-aos-duration="1400"
             data-aos-easing="new-easing"
             data-aos-once="true"
             data-aos="opacity"
-          className="w-2/4 h-full"
+          className="w-2/4 h-full object-cover"
           src={urlFor(page.image5).url()}
           width={1800}
           height={1200}
@@ -182,7 +182,7 @@ export default function Page({ page }: { page: PageProps }) {
              data-aos-once="true"
              data-aos="opacity"
              data-aos-delay="300"
-          className="w-2/4 h-full"
+          className="w-2/4 h-full object-cover"
           src={urlFor(page.image6).url()}
           width={1800}
           height={1200}

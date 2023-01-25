@@ -11,7 +11,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
 import { LocomotiveScrollProvider } from "react-locomotive-scroll";
-
+import { useLocomotiveScroll } from 'react-locomotive-scroll'
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 interface PageProps {
@@ -63,25 +63,15 @@ interface Child {
 }
 
 export default function BrandsPost({ page }: { page: PageProps }) {
-  // useEffect(() => {
-  //   const script = document.createElement('script');
-
-  //   script.src = "/js/slide.js";
-  //   script.async = true;
-
-  //   document.body.appendChild(script);
-
-  //   return () => {
-  //     document.body.removeChild(script);
-  //   }
-
-  // }, []);
+  const  {scroll}  = useLocomotiveScroll()
 
   const ref = useRef(null);
   const options = {
     smooth: true,
     direction: "horizontal",
     lerp : 0.05,
+    class: 'vivisible',
+    scrollFromAnywhere: true,
     smartphone: {
       direction: "vertical",
       resetNativeScroll: true,
@@ -90,16 +80,19 @@ export default function BrandsPost({ page }: { page: PageProps }) {
 
   useEffect(() => {
     AOS.init();
+
     return () => {
       AOS.refresh();
+
     };
   }, []);
 
   return (
-    <LocomotiveScrollProvider options={options} watch= {[]}  containerRef={ref}>
+    <LocomotiveScrollProvider options={options} watch= {[]} scroll = {scroll} containerRef={ref}  onLocationChange={scroll => scroll.scrollTo(0, { duration: 0, disableLerp: true })} // If you want to reset the scroll position to 0 for example
+    onUpdate={() => console.log('Updated, but not on location change!')}>
       {page && page.length > 0 ? (
         page.map((brand, i) => (
-          <div className="fixed">
+          <div className="fixedPhoto" key={i}>
    <div
           
               className="tofix flex-1 pl-4 pr-24 pt-20 pb-12 nl:flex items-end nl:p-12 "
@@ -139,15 +132,15 @@ export default function BrandsPost({ page }: { page: PageProps }) {
           <main      data-aos-duration="1400"
                 data-aos-easing="new-easing"
                 data-aos-once="true"
-                data-aos="new-fade-left" className ='brand fixed top-0 ' data-scroll-container ref={ref}>
+                data-aos="new-fade-left" className ='brand fixedPhoto top-0 ' data-load-container data-scroll-container ref={ref}>
          
 
-            {brand.image && brand.image.length > 0 ? (
+         {brand.image && brand.image.length > 0 ? (
               brand.image.map(
-                (img: { asset: any }, idx: Key | null | undefined) => (
-                  <section className="intro" data-scroll-section>
+                (img,id,id2) => (
+                  <section className="intro" data-scroll-section data-scroll-position = "left" data-scroll-call = 'section' key={id}>
                     <Image
-                      key={idx}
+                      key={id2}
                       className=" object-cover h-full w-full"
                       src={urlFor(img.asset).url()}
                       width={1800}
@@ -156,6 +149,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
                     />
                   </section>
                 )
+
               )
             ) : (
               <p>You forgot to add images</p>
