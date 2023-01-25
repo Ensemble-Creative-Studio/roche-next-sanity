@@ -88,7 +88,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
   }, []);
 
   return (
-    <LocomotiveScrollProvider options={options} watch= {[]} scroll = {scroll} containerRef={ref}  onLocationChange={scroll => scroll.scrollTo(0, { duration: 0, disableLerp: true })} // If you want to reset the scroll position to 0 for example
+    <LocomotiveScrollProvider options={options} watch= {[]} scroll = {scroll} containerRef={ref}  onLocationChange={(scroll: { scrollTo: (arg0: number, arg1: { duration: number; disableLerp: boolean; }) => any; }) => scroll.scrollTo(0, { duration: 0, disableLerp: true })} // If you want to reset the scroll position to 0 for example
     onUpdate={() => console.log('Updated, but not on location change!')}>
       {page && page.length > 0 ? (
         page.map((brand, i) => (
@@ -137,7 +137,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
 
          {brand.image && brand.image.length > 0 ? (
               brand.image.map(
-                (img,id,id2) => (
+                (img: { asset: any; },id: React.Key | null | undefined,id2: React.Key | null | undefined) => (
                   <section className="intro" data-scroll-section data-scroll-position = "left" data-scroll-call = 'section' key={id}>
                     <Image
                       key={id2}
