@@ -144,6 +144,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
                       className=" object-cover h-full w-full"
                       src={urlFor(img.asset).url()}
                       width={1800}
+                      priority
                       height={1200}
                       alt="Agency image"
                     />
