@@ -74,7 +74,7 @@ export default function Brands({ page }: { page: PageProps }) {
     
             {brand.image ? (
               <Image
-                className="object-cover"
+                className="object-cover h-full"
                 src={urlFor(brand.image).url()}
                 width={1800}
                 height={1200}

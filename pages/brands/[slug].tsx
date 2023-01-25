@@ -191,5 +191,5 @@ export async function getStaticPaths() {
     .map((brand: { slug: { current: any } }) => ({
       params: { slug: brand.slug.current },
     }));
-  return { paths, fallback: false };
+  return { paths, fallback: 'blocking'  };
 }
