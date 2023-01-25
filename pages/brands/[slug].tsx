@@ -79,6 +79,11 @@ export default function BrandsPost({ page }: { page: PageProps }) {
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    
+    }, 100);
+   
     AOS.init();
 
     return () => {
