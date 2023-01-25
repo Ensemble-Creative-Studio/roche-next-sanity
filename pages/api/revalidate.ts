@@ -21,7 +21,7 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
     await res.revalidate(`/`);
     await res.revalidate(`/contact`);
     await res.revalidate(`/legal`);
-    await res.revalidate(`/agency/`);
+    await res.revalidate(`/agency/[slug]`);
 
     
     res.status(200).json({ msg: 'Product pages revalidated.' });
