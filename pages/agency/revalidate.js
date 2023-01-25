@@ -1,7 +1,7 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook';
 
 
-const SANITY_WEBHOOK_SECRET = process.env.SANITY_WEBHOOK_SECRET;
+const SANITY_WEBHOOK_SECRET = 'secret';
 
 
 export default async function handler(req, res) {
