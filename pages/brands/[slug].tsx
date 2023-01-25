@@ -146,7 +146,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
                   <section className="intro" data-scroll-section data-scroll-position = "left" data-scroll-call = 'section' key={id}>
                     <Image
                       key={id2}
-                      className=" object-cover h-full w-full"
+                      className=" object-cover h-full nl:w-auto w-full"
                       src={urlFor(img.asset).url()}
                       width={1800}
                       priority
