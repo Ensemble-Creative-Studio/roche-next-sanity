@@ -1,37 +1,28 @@
-import { isValidRequest } from "@sanity/webhook"
-import type { NextApiRequest, NextApiResponse } from "next"
+import { SIGNATURE_HEADER_NAME, isValidSignature } from '@sanity/webhook';
 
-type Data = {
-  message: string
-}
-
-const secret = 'secret'
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  if (req.method !== "POST") {
-    console.error("Must be a POST request")
-    return res.status(401).json({ message: "Must be a POST request" })
-  }
-
-  if (!isValidRequest(req, secret)) {
-    res.status(401).json({ message: "Invalid signature" })
-    return
-  }
-
+const handler = async (req: { headers: { [x: string]: { toString: () => any; }; }; body: { id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { msg?: string; err?: string; }): void; new(): any; }; }; revalidate: (arg0: string) => any; }) => {
+    const secret = process.env.SANITY_WEBHOOK_SECRET
+//authenticating the webhook
   try {
-    const {
-      body: { type, slug },
-    } = req
+    const signature = req.headers[SIGNATURE_HEADER_NAME].toString();
+    if (
+      !isValidSignature(
+        JSON.stringify(req.body),
+        signature,
+        'secret'
+      )
+    )
+      return res.status(401).json({ msg: 'Invalid request!' });
 
-    switch (type) {
-      case "post":
-        await res.revalidate(`/agency/`)
-        return res.json({ message: `Revalidated "${type}" with slug "${slug}"` })
-    }
+    //getting payload
+    const { id } = req.body;
+    await res.revalidate(`/agency/`);
 
-    return res.json({ message: "No managed type" })
-  } catch (err) {
-    return res.status(500).send({ message: "Error revalidating" })
+    
+    res.status(200).json({ msg: 'Product pages revalidated.' });
+  } catch (error) {
+    res.status(500).json({ err: 'Something went Wrong!' });
   }
-}
+};
 
+export default handler;
