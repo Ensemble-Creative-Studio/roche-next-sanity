@@ -16,6 +16,11 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
 
     //getting payload
     const { id } = req.body;
+    await res.revalidate(`/agency`);
+    await res.revalidate(`/brands`);
+    await res.revalidate(`/`);
+    await res.revalidate(`/contact`);
+    await res.revalidate(`/legal`);
     await res.revalidate(`/agency/`);
 
     

@@ -8,6 +8,6 @@ export const client = createClient({
     projectId,
     dataset,
     apiVersion,
-    // token,
+    token,
     useCdn: false,
 })
