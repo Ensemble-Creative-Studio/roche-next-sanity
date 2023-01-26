@@ -15,6 +15,18 @@ export default defineType({
             readOnly: ({ document }) => !document?.publishedOnce,
         },
         {
+          name: 'metatitle',
+          type: 'text',
+          title: 'Meta Title',
+          hidden: ({document}) => document?.title !== 'Home Page',
+      },
+      {
+          name: 'metadescription',
+          type: 'text',
+          title: 'Meta Description',
+          hidden: ({document}) => document?.title !== 'Home Page',
+      },
+        {
             name: 'videoBackground',
             type: 'url',
             title: 'Video Background URL',
@@ -26,6 +38,7 @@ export default defineType({
             title: 'Description',
             hidden: ({document}) => document?.title !== 'Home Page',
         },
+     
         {
             name: 'image1',
             type: 'image',
