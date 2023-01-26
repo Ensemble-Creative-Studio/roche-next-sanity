@@ -72,10 +72,10 @@ export default function Brands({ page }: { page: PageProps }) {
                        <Link className='flex p-4 flex-col-reverse items-start nl:pr-12 nl:pl-12 nl:pb-8 '  href={`/brands/${encodeURIComponent(brand.slug?.current) }`}>
             <h2 className="pt-4">{brand.name}</h2>
     
-            {brand.image ? (
+            {brand.imageCover ? (
               <Image
                 className="object-cover nl:h-full"
-                src={urlFor(brand.image).url()}
+                src={urlFor(brand.imageCover).url()}
                 width={1800}
                 height={1200}
                 alt="Agency image"
@@ -95,7 +95,7 @@ export default function Brands({ page }: { page: PageProps }) {
 }
 
 export async function getStaticProps() {
-  const query = groq`*[_type == 'brands'  ]{name, image[1], slug}`;
+  const query = groq`*[_type == 'brands'  ]{name, imageCover, slug}`;
   const data = await client.fetch(query);
   if (data && data.length > 0) {
     return {

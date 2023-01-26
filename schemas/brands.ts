@@ -48,6 +48,13 @@ export default defineType({
               }),
             ],
           }),
+          {
+            name: 'imageCover',
+            type: 'image',
+            title: 'Image Cover',
+         
+            // hidden: ({document}) => document?.title !== 'Home Page',
+        },
         {
             
           title: "Image collection",
