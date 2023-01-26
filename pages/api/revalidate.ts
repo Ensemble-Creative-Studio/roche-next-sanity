@@ -23,7 +23,7 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
     await res.revalidate(`/contact`);
     await res.revalidate(`/legal`);
     await res.revalidate(`/brands/${slug}`);
-    await res.revalidate(`/agency/skall-studio`);
+    await res.revalidate(`/brands/skall-studio`);
 
     
     res.status(200).json({ msg: 'Product pages revalidated.' });
