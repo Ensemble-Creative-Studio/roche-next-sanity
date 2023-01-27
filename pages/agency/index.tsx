@@ -164,7 +164,7 @@ export default function Page({ page }: { page: PageProps }) {
 
       </div>
   
-      <div className="flex nl:h-screen h-auto">
+      <div className="flex h-auto">
         <Image
             data-aos-duration="1400"
             data-aos-easing="new-easing"
