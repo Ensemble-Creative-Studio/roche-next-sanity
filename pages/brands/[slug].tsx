@@ -82,7 +82,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     
-    }, 100);
+    }, 400);
    
     AOS.init();
 
