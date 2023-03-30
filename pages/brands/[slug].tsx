@@ -155,7 +155,6 @@ export default function BrandsPost({ page }: { page: PageProps }) {
                     />
                   </section>
                 )
-
               )
             ) : (
               <p>You forgot to add images</p>
