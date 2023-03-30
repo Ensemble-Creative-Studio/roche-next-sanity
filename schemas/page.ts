@@ -30,6 +30,7 @@ export default defineType({
             name: 'videoBackground',
             type: 'url',
             title: 'Video Background URL',
+            description: 'add "&background=1&autoplay=1&loop=1&byline=0&title=0" at the end of the vimeo URL',
             hidden: ({document}) => document?.title !== 'Home Page',
         },
         {
