@@ -94,7 +94,7 @@ export default function Brands({ page }: { page: PageProps }) {
   // Rest of the component remains the same
   return (
     <div className="flex justify-end">
-      <div className="grid grid-cols-2 nl:grid-cols-4 nl:grid-rows-1" ref={gridRef}>
+      <div className="grid grid-cols-2 nl:grid-cols-4 nl:grid-rows-1 pt-24" ref={gridRef}>
         {page && page.length > 0 ? (
         page.map((brand, i) => (
  
