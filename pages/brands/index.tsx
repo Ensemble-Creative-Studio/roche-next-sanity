@@ -113,9 +113,9 @@ export default function Brands({ page }: { page: PageProps }) {
               <Image
                 className="object-cover "
                 src={urlFor(brand.imageCover).url()}
-                width={1800}
+                width={300}
                 
-                height={1200}
+                height={600}
                 alt="Agency image"
               />
             ) : (
