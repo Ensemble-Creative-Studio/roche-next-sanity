@@ -99,19 +99,19 @@ export default function Brands({ page }: { page: PageProps }) {
     }
   }, [firstAnimatedHeight]);
   return (
-    <div className="flex justify-end">
-      <div className="grid grid-cols-2 nl:grid-cols-4 nl:grid-rows-1 pt-24" >
+    <div className="block w-full">
+      <div className="grid grid-cols-2 nl:grid-cols-4 nl:grid-rows-1 pt-24 w-full" >
         {page && page.length > 0 ? (
         page.map((brand, i) => (
  
-          <div className="animated  flex justify-end" key={i}>
+          <div className="animated  flex w-full h-full " key={i}>
             
-                       <Link className='flex p-4 flex-col-reverse items-start nl:pr-12 nl:pl-12 nl:pb-8 '  href={`/brands/${encodeURIComponent(brand.slug?.current) }`}>
+                       <Link className='flex w-full h-full p-4 flex-col-reverse items-start nl:pr-12 nl:pl-12 nl:pb-8 '  href={`/brands/${encodeURIComponent(brand.slug?.current) }`}>
             <h2 className="pt-4">{brand.name}</h2>
     
             {brand.imageCover ? (
               <Image
-                className="object-cover "
+                className="object-cover w-full h-full"
                 src={urlFor(brand.imageCover).url()}
                 width={300}
                 
