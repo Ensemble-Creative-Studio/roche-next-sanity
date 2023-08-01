@@ -61,6 +61,7 @@ interface Child {
 
 export default function Brands({ page }: { page: PageProps }) {
   const gridRef = useRef<HTMLDivElement>(null);
+  const [firstAnimatedHeight, setFirstAnimatedHeight] = useState<number | null>(null);
 
   useEffect(() => {
     // Function to calculate the height of the first animated element
@@ -68,14 +69,9 @@ export default function Brands({ page }: { page: PageProps }) {
       const gridElement = gridRef.current;
       if (gridElement) {
         const firstAnimatedElement = gridElement.querySelector(".animated");
-  
+
         if (firstAnimatedElement) {
-          setTimeout(() => {
-            const firstAnimatedHeight = firstAnimatedElement.getBoundingClientRect().height;
-            const paddingTop = `calc(91vh - ${firstAnimatedHeight}px)`;
-            gridElement.style.paddingTop = paddingTop;
-          }, 30);
-       
+          setFirstAnimatedHeight(firstAnimatedElement.getBoundingClientRect().height);
         }
       }
     };
@@ -91,10 +87,20 @@ export default function Brands({ page }: { page: PageProps }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  // Rest of the component remains the same
+
+  useEffect(() => {
+    // When the firstAnimatedHeight changes, the image has fully loaded
+    if (firstAnimatedHeight) {
+      const gridElement = gridRef.current;
+      if (gridElement) {
+        const paddingTop = `calc(91vh - ${firstAnimatedHeight}px)`;
+        gridElement.style.paddingTop = paddingTop;
+      }
+    }
+  }, [firstAnimatedHeight]);
   return (
     <div className="flex justify-end">
-      <div className="grid grid-cols-2 nl:grid-cols-4 nl:grid-rows-1 pt-24" ref={gridRef}>
+      <div className="grid grid-cols-2 nl:grid-cols-4 nl:grid-rows-1 pt-24" >
         {page && page.length > 0 ? (
         page.map((brand, i) => (
  
