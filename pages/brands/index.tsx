@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from "react";
+import { useEffect, useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 
 import { useState } from "react";
@@ -60,21 +60,52 @@ interface Child {
 }
 
 export default function Brands({ page }: { page: PageProps }) {
+  const gridRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Function to calculate the height of the first animated element
+    const calculateHeight = () => {
+      const gridElement = gridRef.current;
+      if (gridElement) {
+        const firstAnimatedElement = gridElement.querySelector(".animated");
+  
+        if (firstAnimatedElement) {
+          setTimeout(() => {
+            const firstAnimatedHeight = firstAnimatedElement.getBoundingClientRect().height;
+            const paddingTop = `calc(91vh - ${firstAnimatedHeight}px)`;
+            gridElement.style.paddingTop = paddingTop;
+          }, 30);
+       
+        }
+      }
+    };
+
+    // Calculate height on initial render
+    calculateHeight();
+
+    // Recalculate height on window resize
+    const handleResize = () => calculateHeight();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  // Rest of the component remains the same
   return (
-    <div className="mobile-height-svh flex justify-end">
-    <div className="grid grid-cols-2 grid-rows-2 nl:grid-cols-4 nl:grid-rows-1">
-      {page && page.length > 0 ? (
+    <div className="flex justify-end">
+      <div className="grid grid-cols-2 nl:grid-cols-4 nl:grid-rows-1" ref={gridRef}>
+        {page && page.length > 0 ? (
         page.map((brand, i) => (
  
-          <div className="animated row-start-2 flex justify-end" key={i}>
+          <div className="animated  flex justify-end" key={i}>
             
                        <Link className='flex p-4 flex-col-reverse items-start nl:pr-12 nl:pl-12 nl:pb-8 '  href={`/brands/${encodeURIComponent(brand.slug?.current) }`}>
             <h2 className="pt-4">{brand.name}</h2>
     
             {brand.imageCover ? (
               <Image
-                className="object-cover nl:h-full"
+                className="object-cover "
                 src={urlFor(brand.imageCover).url()}
                 width={1800}
                 height={1200}
@@ -95,7 +126,7 @@ export default function Brands({ page }: { page: PageProps }) {
 }
 
 export async function getStaticProps() {
-  const query = groq`*[_type == 'brands'  ]{name, imageCover, slug}`;
+  const query = groq`*[_type == 'brands'  ]|order(orderRank)`;
   const data = await client.fetch(query);
   if (data && data.length > 0) {
     return {

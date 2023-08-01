@@ -1,9 +1,11 @@
 import {defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
+import { DocumentIcon } from '@sanity/icons'
+
 import {visionTool} from '@sanity/vision'
 import { dashboardTool } from "@sanity/dashboard";
 import { netlifyWidget } from "sanity-plugin-dashboard-widget-netlify";
-
+import {deskTool, StructureBuilder} from 'sanity/desk'
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import {schemaTypes} from './schemas'
 import StudioNavbar from './app/(user)/components/StudioNavbar'
 const projectId = 'reejd2e7';
@@ -17,7 +19,16 @@ export default defineConfig({
   projectId,
   dataset,
 
-  plugins: [deskTool(), visionTool(),
+  plugins: [deskTool({
+    structure: (S, context) => {
+      return S.list()
+        .title('Content')
+        .items([
+          orderableDocumentListDeskItem({type: 'brands',     title: 'Brands', S, context}),          // ... add all other desk items here.
+          orderableDocumentListDeskItem({type: 'page',  icon: DocumentIcon,   title: 'Pages  ', S, context}),          // ... add all other desk items here.
+        ])
+    }
+  }), visionTool(),
     dashboardTool({
       widgets: [
         netlifyWidget({

@@ -1,4 +1,6 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
+
 interface CustomDocumentType {
     _id: string;
     title: string;
@@ -6,7 +8,11 @@ interface CustomDocumentType {
 export default defineType({
     name: 'page',
     type: 'document',
+    orderings: [orderRankOrdering],
+
     fields: [
+      orderRankField({ type: "category" }),
+
         {
             name: 'title',
             type: 'string',
@@ -212,14 +218,14 @@ export default defineType({
         ],
       }),
     ],
-    orderings: [
-      {
-        title: 'Order old to new',
-        name: 'releaseDateDesc',
-        by: [
-          {field: '_createdAt', direction: 'asc'}
-        ]
-      },
-    ]  
+    // orderings: [
+    //   {
+    //     title: 'Order old to new',
+    //     name: 'releaseDateDesc',
+    //     by: [
+    //       {field: '_createdAt', direction: 'asc'}
+    //     ]
+    //   },
+    // ]  
 }
 )
