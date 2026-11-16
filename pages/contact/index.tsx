@@ -103,10 +103,11 @@ export async function getStaticProps() {
   const data = await client.fetch(query);
   if (data && data.length > 0) {
     return {
+      revalidate: 60,
       props: {
         page: data[0],
       },
     };
   }
-  return { props: { page: null } };
+  return { props: { page: null }, revalidate: 60 };
 }

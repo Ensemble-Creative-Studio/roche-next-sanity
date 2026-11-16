@@ -1,32 +1,41 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { SIGNATURE_HEADER_NAME, isValidSignature } from '@sanity/webhook';
 
-const handler = async (req: { headers: { [x: string]: { toString: () => any; }; }; body: { id: any; slug: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { msg?: string; err?: string; }): void; new(): any; }; }; revalidate: (arg0: string) => any; }) => {
-    const secret = process.env.SANITY_WEBHOOK_SECRET
-//authenticating the webhook
-  try {
-    const signature = req.headers[SIGNATURE_HEADER_NAME].toString();
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
-    if (
-      !isValidSignature(
-        JSON.stringify(req.body),
-        signature,
-        'secret'
-      )
-    )
+async function readBody(req: NextApiRequest) {
+  const chunks: Buffer[] = [];
+  for await (const chunk of req) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks).toString('utf8');
+}
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== 'POST') return res.status(405).json({ msg: 'Method not allowed' });
+
+  const secret = process.env.SANITY_REVALIDATE_SECRET;
+  if (!secret) return res.status(500).json({ err: 'Missing secret' });
+
+  try {
+    const body = await readBody(req);
+    const signature = req.headers[SIGNATURE_HEADER_NAME];
+    if (typeof signature !== 'string' || !(await isValidSignature(body, signature, secret)))
       return res.status(401).json({ msg: 'Invalid request!' });
 
-    //getting payload
-    const { id, slug } = req.body;
+    const { slug } = JSON.parse(body);
     await res.revalidate(`/agency`);
     await res.revalidate(`/brands`);
     await res.revalidate(`/`);
     await res.revalidate(`/contact`);
     await res.revalidate(`/legal`);
-    await res.revalidate(`/brands/${slug}`);
-    await res.revalidate(`/brands/skall-studio`);
+    if (slug) await res.revalidate(`/brands/${slug}`);
 
-    
-    res.status(200).json({ msg: 'Product pages revalidated.' });
+    res.status(200).json({ msg: 'Pages revalidated.' });
   } catch (error) {
     res.status(500).json({ err: 'Something went Wrong!' });
   }

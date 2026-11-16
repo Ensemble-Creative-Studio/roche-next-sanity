@@ -13,7 +13,7 @@ import gsap from "gsap";
 import { useState } from "react";
 interface PageProps {
   length: number;
-  map(arg0: (brand: any, i: any) => JSX.Element): import("react").ReactNode;
+  map(arg0: (brand: any, i: any) => import("react").JSX.Element): import("react").ReactNode;
   _createdAt: Date;
   _id: string;
   _rev: string;
@@ -137,10 +137,11 @@ export async function getStaticProps() {
   const data = await client.fetch(query);
   if (data && data.length > 0) {
     return {
+      revalidate: 60,
       props: {
         page: data,
       },
     };
   }
-  return { props: { page: null } };
+  return { props: { page: null }, revalidate: 60 };
 }

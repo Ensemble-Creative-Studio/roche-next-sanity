@@ -3,12 +3,11 @@ import {createClient} from "next-sanity"
 export const projectId = 'reejd2e7';
 
 export const dataset = "production";
-const apiVersion = '2022-11-15'
-const token = process.env.NEXT_WEBHOOK_SECRET
+const apiVersion = '2025-11-01'
 export const client = createClient({
     projectId,
     dataset,
     apiVersion,
-    token,
     useCdn: false,
+    perspective: 'published',
 })
