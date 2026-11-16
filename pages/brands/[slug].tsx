@@ -3,7 +3,7 @@ import { client } from "../../lib/sanity.client";
 import Image from "next/image";
 import urlFor from "../../lib/urlFor";
 import { Slug } from "../../typings";
-import React, { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect } from "react";
+import React, { JSXElementConstructor, Key, ReactElement, ReactPortal, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useRef } from "react";
@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 interface PageProps {
   length: number;
-  map(arg0: (brand: any, i: any) => JSX.Element): import("react").ReactNode;
+  map(arg0: (brand: any, i: any) => React.JSX.Element): import("react").ReactNode;
   _createdAt: Date;
   _id: string;
   _rev: string;
@@ -119,7 +119,7 @@ export default function BrandsPost({ page }: { page: PageProps }) {
                         | number
                         | boolean
                         | ReactElement<any, string | JSXElementConstructor<any>>
-                        | ReactFragment
+                        | Iterable<React.ReactNode>
                         | ReactPortal
                         | null
                         | undefined;
@@ -175,7 +175,9 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
   const { slug } = context.params;
   const query = groq`*[_type == 'brands' && slug.current == $slug]`;
   const data = await client.fetch(query, { slug });
+  if (!data || data.length === 0) return { notFound: true, revalidate: 60 };
   return {
+    revalidate: 60,
     props: {
       page: data,
     },
@@ -190,5 +192,5 @@ export async function getStaticPaths() {
     .map((brand: { slug: { current: any } }) => ({
       params: { slug: brand.slug.current },
     }));
-  return { paths, fallback: true  };
+  return { paths, fallback: "blocking" };
 }
