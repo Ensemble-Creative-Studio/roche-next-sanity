@@ -5,6 +5,7 @@ import {visionTool} from '@sanity/vision'
 import {structureTool} from 'sanity/structure'
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import {schemaTypes} from './schemas'
+import {brandActions, defaultDocumentNode} from './lib/brandPreview'
 import StudioNavbar from './app/(user)/components/StudioNavbar'
 const projectId = 'reejd2e7';
 const dataset = "production";
@@ -18,6 +19,7 @@ export default defineConfig({
   dataset,
 
   plugins: [structureTool({
+    defaultDocumentNode,
     structure: (S, context) => {
       return S.list()
         .title('Content')
@@ -36,5 +38,9 @@ components: {
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: brandActions,
   },
 })

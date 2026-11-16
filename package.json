@@ -21,6 +21,7 @@
     "react-dom": "^19.3.1",
     "react-locomotive-scroll": "^0.2.2",
     "sanity": "^6.23.0",
+    "sanity-plugin-iframe-pane": "^5.0.43",
     "sass": "^1.108.2",
     "styled-components": "^6.6.0"
   },
